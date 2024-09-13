@@ -17,6 +17,19 @@
         <p id="demo3">Hello3</p>
     </div>
 
+    <button onclick="test()">Button-1</button>
+    <button id="btn2">Button-2</button>
+    <button id="btn3">Button-3</button>
+
+    <button id="btn-4">Click</button>
+    <div id="class1"></div>
+
+    <button id="btn-5">Button-5</button>
+    <div id="class2"></div>
+
+    <button id="btn-6">Button-6</button>
+    <div id="class3"></div>
+
 
 
     <script>
@@ -367,6 +380,306 @@
 
         par.setAttribute("style", "background : yellow")
         console.log(par.classList)
+
+        //Event = perform some actions when click the button.
+        // 3 ways to add events:-
+        //1. Using In-line html = create one button , In that button add event i.e onclick and we have to write javascript code to that event
+        function test() {
+            alert("Button-1 clicked")
+        }
+
+        //2. Using Event properties
+        var bt2 = document.getElementById("btn2")
+        bt2.onclick = () => alert("button-2 clicked")  // arrow function
+
+        // same as above
+        bt2.onclick = test2
+        function test2() {
+            alert("button-2 clicked from named function")
+        }
+
+        // removing bt2 event
+        bt2.removeEventListener("click", test2)
+        function test2() {
+            bt2.onclick = null
+        }
+
+        //3. Using addEventListener("event_name",function_name or direct function)
+        var bt3 = document.getElementById("btn3")
+        // bt3.addEventListener("click", () => alert("Button-3 clicked from arrow function"))
+
+        // same as above
+        bt3.addEventListener("click", test3)
+        function test3() {
+            alert("Button-3 clicked from named function")
+        }
+
+        //remove bt3 Event
+        bt3.removeEventListener("click", test3)
+
+
+        // Call back function is a function passed as argument to the another function.
+        //1. Calculator
+        function add(a, b) {
+            console.log(`addition of ${a} and ${b} is : ${a + b}`)
+        }
+        function mul(a, b) {
+            console.log(`multiplication of ${a} and ${b} is : ${a * b}`)
+        }
+        function calculator(val1, val2, operation) {
+            operation(val1, val2)
+        }
+        calculator(4, 4, add)
+        calculator(4, 4, mul)
+
+        // f1 is passed as argument to the f2
+        function f1(name, age) {
+            console.log("name is :", name + " and age is :", age)
+        }
+        function f2(a, b, c) {
+            c(a, b)
+        }
+        f2("john", 22, f1)
+
+
+        //f4 is passed as argument to the f3
+        function f3(var_8) {
+            var_8("mike", "Good Morning")
+        }
+        function f4(name, message) {
+            console.log("name :", name + " and message :", message)
+        }
+        f3(f4)
+
+        //same as above but different approach
+        function f5(n1, m1, var_9) {
+            var_9(n1, m1)
+        }
+        function f6(name, message) {
+            console.log("name :", name + " and message :", message)
+        }
+        f5("mike", "Good Morning", f6)
+
+        //Higher order function = one function is passed as argument to the another function (or) one function returns in another function.
+
+        function x(name, c) {
+            console.log(name)
+            return y(c)
+        }
+
+        function y(country) {
+            return (country)
+        }
+
+        console.log(x("neymer", "brazil"))
+
+        // closure = is a feature outer function variables are accessed by inner function variable
+
+        function outer() {
+            var outer = "outer function"
+            function inner() {
+                console.log("inner function")
+                console.log(outer)
+            }
+            return inner()
+        }
+        outer()
+
+        // Call,apply, bind = these methodes used to change the this keyword parent object.
+        my_obj = {
+            name: "raju",
+            greet: (wish) => {
+                console.log("name is :", this.name + " wish :", wish)
+            }
+        }
+        my_obj.greet("Good morning")
+
+        my_obj1 = {
+            name: "john"
+        }
+
+        my_obj2 = {
+            name: "messi"
+        }
+
+        my_obj3 = {
+            name: "jonsnow"
+        }
+
+
+        my_obj.greet.call(my_obj1, "Good evening")
+        my_obj.greet.apply(my_obj2, ["Good night"])
+        var va = my_obj.greet.bind(my_obj3, "Good")
+        va()
+
+        //Math functions are used for mathamatical operations
+        console.log("sign of number '-9' is :", Math.sign(-9))
+        console.log("sign of number '9' is :", Math.sign(9))
+        console.log("Absolute value of -9 is :", Math.abs(-9))
+        console.log("Absolute value of 9 is :", Math.abs(9))
+        console.log("Square root of 25 is :", Math.sqrt(25))
+        console.log("Exponential of 2,4 is :", Math.exp(2, 4))
+        console.log("random number :", Math.random())
+        console.log("Roundup of 9.49 is :", Math.round(9.49))
+        console.log("Roundup of 9.50 is :", Math.round(9.50))
+        console.log("Roundup of 9.0 is :", Math.ceil(9.0))
+        console.log("Roundup of 9.0 is :", Math.ceil(9.1))
+        console.log("floor value of 9.0 is :", Math.floor(9.0))
+        console.log("floor value of 9.0 is :", Math.floor(9.9))
+
+        //Date 
+        var date1 = new Date()
+        console.log("Current date is :", date1)
+
+        var date2 = new Date(1000)
+        console.log("1 second added to Standard time :", date2)
+
+        var date3 = new Date("02-29-2002")
+        console.log("Setting up the time :", date3)
+
+        var date4 = new Date(2002, 8, 23, 5, 20, 20)
+        console.log("Setting up the time with hrs-min-sec :", date4)
+
+        //Asynchronous Programming = It Doesn't stop the programming flow , less taken statements are execute first.
+        let arr = ["alice", "bob", "carry", "danny", "emma", "frongs", "hyane", "irfan", "jimmy", "kane", "lara"]
+        setTimeout(function () {
+            arr.forEach(function (item, index, tarr) {
+                console.log("Current Item :", item + " Current item index :", index + " complete full array :", tarr)
+            })
+
+        }, 3000)
+        console.log("'This statement after the Asynchronous program i.e setTimeout'")
+
+        //AJAX = Asynchronous Javascript And Xml used to make the HttpRequest to the server and get response from server without reload the current webpage.
+        var bt = document.getElementById("btn-4")
+        var new_div = document.getElementById("class1")
+
+        bt.onclick = test4
+        function test4() {
+            var xhr = new XMLHttpRequest()
+            xhr.open("get", "demo.json")
+            xhr.send()
+            xhr.onload = function () {
+                new_div.innerText = xhr.responseText
+            }
+        }
+
+        // Promises is an object and Asynchronous programming , It has 3 states 1.resolve (or) Fullfill 2.reject 3.pending
+        var new_1 = new Promise(function (resolve, reject) {
+
+            if (data = false) {
+                console.log("Promise is done")
+            }
+            else {
+                console.log("Promise is reject")
+            }
+        })
+
+        //Promises using in Ajax 
+        let x11 = document.getElementById("btn-5")
+        let y11 = document.getElementById("class2")
+
+        x11.onclick = test5
+        function test5() {
+            let promis = new Promise(function () {
+                let xhr1 = new XMLHttpRequest()
+                xhr1.open("get", "54_demo.js")
+                xhr1.send()
+                xhr1.onload = function () {
+                    y11.innerText = xhr1.responseText
+                }
+            })
+        }
+
+        //Fetch API = used to make ajax calls,It returns the promises .then() used to access it.
+        var c11 = fetch("demo.json")
+        c11.then(function (data) {
+            data.text().then(function (data1) {     // It gives what exactly on that file
+                console.log(data1)
+            })
+        })
+
+        var c11 = fetch("demo.json")
+            .then(function (data) {
+                data.json().then(function (data1) {     // It gives as json
+                    console.log(data1)
+                })
+            })
+
+
+        //Async and await keywords are used to run the program asynchronously.
+
+        var a11 = document.getElementById("btn-6")
+        var b11 = document.getElementById("class3")
+
+        a11.onclick = () => {
+            var d1 = fetch("demo.json")
+                .then(function (d) {
+                    d.text().then(function (d1) {
+                        b11.innerText = d1
+                    })
+                })
+        }
+
+        // same as above but async and await keywords are used.
+        a11.onclick = async () => {
+            var e1 = await fetch("demo.json")          // await = wait the statements also returns promise state
+            var d1 = await e1.text()                    // No need to call .then()
+            b11.innerText = d1
+        }
+
+
+        // class is a collection of objects, code reusability
+        class raju1 {
+            constructor(name, age, gender) {
+                this.name = name;
+                this.age = age;
+                this.gender = gender;
+            }
+            set methode(age) {
+                this.age = age
+            }
+            get getmethode() {
+                console.log("name :", this.name + " age :", this.age + " gender :", this.gender)
+            }
+
+            greet1() {
+                console.log("name is :", this.name)
+            }
+        }
+        let obj_11 = new raju1("raju", 24, "male")
+        obj_11.getmethode
+        obj_11.methode = 30
+        obj_11.getmethode
+        obj_11.greet1()
+
+        // Inheritance
+        class parent {
+            constructor(name, age) {
+                this.name = name;
+                this.age = age
+            }
+        }
+
+        class child extends parent {
+            constructor(name, age, gender) {
+                super(name, age)
+                this.gender = gender
+            }
+            methode1() {
+                console.log("name :", this.name + " and age :", this.age + " and gender : ", this.gender)
+            }
+        }
+
+        var obj_22 = new child("jack", 33, "male")
+        obj_22.methode1()
+
+
+
+
+
+
+
 
 
 
